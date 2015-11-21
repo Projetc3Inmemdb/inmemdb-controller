@@ -17,7 +17,7 @@ public:
      * MaxServers=2;
      * es la cantidad de servidores a la que nos vamos a conectar.
      */
-    static const int MaxServers=1;
+    static const int MaxServers=2;
     /**
      * bandera de debug
      */
@@ -47,6 +47,18 @@ public:
      */
     static const int cinco=5;
     /**
+     * diez=10
+     */
+    static const int diez=10;
+    /**
+     * ipLenght=16
+     */
+    static const int ipLeght=16;
+    /**
+	 * ipLenght=16
+	 */
+	static const int portLeght=4;
+    /**
      * DosCincoSeis=256
      */
     static const int DosCientaSeis=256;
@@ -74,6 +86,8 @@ public:
      * "ERROR reading from socket"
      */
     static const char* error5;
+
+    static const char* direTTServerDatas;
     int getLenght(const char* msg);
 };
 

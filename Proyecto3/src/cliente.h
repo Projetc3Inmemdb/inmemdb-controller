@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   cliente.h
  * Author: ellioth
  *
@@ -11,26 +11,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <sys/types.h> 
+#include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <netdb.h>
 #include <pthread.h>
 #include "structs.h"
 #include "Constantes.h"
-#include "Controler.h"
 
-/**
- * struct para guardar los datos de la conexion
- * contra el server.
- */
-struct conToServer{
-    int _sockfd;
-    int _portno;
-    int _n ;
-    struct hostent * _server;
-    struct sockaddr_in _serv_addr;
-};
 
 /**
  * clase que hace coneccion contra el servidor
@@ -45,11 +33,9 @@ private:
 	int _Nserver;
 	int _cantHilos;
 	conToServer _pTcontn[MaxServers];
-	pthread_t _hilos[MaxServers];
 	void *conncT(void* datas);
 	void sendMSG(void* datas);
 	void error(const char* pMsg);
-	static void * statContt(void* datas);
 };
 
 #endif	/* CLIENTE_H */

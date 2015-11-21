@@ -19,7 +19,7 @@ cliente::cliente() {
  */
 cliente::~cliente() {
 	delete [] _pTcontn;
-	delete [] _hilos;
+	//delete [] _hilos;
 }
 
 /**
@@ -33,7 +33,7 @@ void cliente::startThread(char* pIP, int Pport) {
         return;
     }
     //crear el struct que va a contener los datos de la conexion
-    thread_data datos;
+    server_data datos;
     //establecer sus atributos.
     datos.pIP=pIP;
     datos.pPort=Pport;
@@ -46,7 +46,7 @@ void cliente::startThread(char* pIP, int Pport) {
     establecer el dato
     datos.MSG=(void*)&msg;
     establecer conexion y enviar dato.
-    prueba(datos);*/
+    prueba(datos);
     int respond;
     contenedorThread datapThread;
     datapThread.apuntador= this;
@@ -55,7 +55,8 @@ void cliente::startThread(char* pIP, int Pport) {
     if(respond<cero){
     	 std::cout<<"Error:unable to create thread,"<<respond<< std::endl;
 		 exit(-uno);
-    }
+    }*/
+    conncT((void*)&datos);
     _Nserver++;
 }
 
@@ -65,8 +66,7 @@ void cliente::startThread(char* pIP, int Pport) {
  * realizar.
  */
 void * cliente::conncT(void* datas){
-	contenedorThread temp=*((contenedorThread*)datas);
-    thread_data datos= temp.datos;
+    server_data datos= *(server_data*)datas;
     //
     _pTcontn[datos.spaceThread]._sockfd= socket(AF_INET, SOCK_STREAM, cero);
     //
@@ -120,7 +120,7 @@ void cliente::sendMSG(void* pMsg) {
 }
 
 /*
-void cliente::prueba(thread_data datos) {
+void cliente::prueba(server_data datos) {
     //establecer el sockfd
     _pTcontn[datos.spaceThread]._sockfd= socket(AF_INET, SOCK_STREAM, cero);
     //revisar si se pudo establecer
@@ -167,15 +167,6 @@ void cliente::prueba(thread_data datos) {
     message _dato =*((message*)datos.MSG);
     std::cout<<_dato.MSG<<std::endl;
 }*/
-
-/**
- * metodo estatico para arrancar el thread.
- * recibe un void * que es el parametro que le pasamos para hacer que el
- * pthread funcione.
- */
-void* cliente::statContt(void *datas){
-	((*(contenedorThread*)datas).apuntador)->conncT(datas);
-}
 
 /**
  * metodo para imiprimir en consola que hubo un error de conexion

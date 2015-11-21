@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   Controler.h
  * Author: ellioth
  *
@@ -23,7 +23,7 @@ public:
     void writeToServer(void* dato);
 	void readFromServer(void* dato);
 private:
-    class cliente * _conexiones;
+    cliente * _conexiones;
 };
 
 #endif	/* CONTROLER_H */

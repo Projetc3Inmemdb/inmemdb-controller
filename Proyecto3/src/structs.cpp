@@ -4,7 +4,6 @@
 /**
  * inicializacion de structs.
  */
-thread_data thrdDtt={};
+server_data thrdDtt={};
 message messDtt={};
-contenedorThread conTT={};
-//conToServer conett[]={{}};
+conToServer conett[]={{}};
