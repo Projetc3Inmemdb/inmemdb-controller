@@ -7,30 +7,40 @@
 
 #include <cstdlib>
 #include <iostream>
-#include <pthread.h>
-#include <omp.h>
-#include "cliente.h"
+#include <fstream>
+#include <string.h>
+#include "Controler.h"
+#include "serveDatasReader.h"
+#include "structs.h"
 using namespace std;
 
-void* print_message(void*){
-    cout << "Threading\n"<<"";
-    pthread_exit(NULL);
-}
+
 /*
  * 
  */
 int main(int argc, char** argv) {
-    //cliente * nuevo = new cliente();
-    ///nuevo->startThread("127.0.0.1",5005);
-    pthread_t t1[1];
-    int create;
-    create=pthread_create(&t1[0], NULL, print_message, NULL);
-    if(create){
-        cout<<"Error:unable to create thread," <<create<<endl;
-        exit(-1);
-    }
-    cout << "Hello"<<"";
-    pthread_exit(NULL);
+	/*ifstream dataReader;
+	dataReader.open("/home/ellioth/Desktop/serversDatas.txt");
+	char* buffer=(char*)malloc(sizeof(char)*16);
+	for(int i =0,j=0; j<2;j++){
+		bzero(buffer,16);
+		dataReader.seekg(i,dataReader.beg);
+		dataReader.read(buffer,15);
+		i+=16;
+		cout<<buffer<<endl;
+		bzero(buffer,16);
+		dataReader.seekg(i,dataReader.beg);
+		dataReader.read(buffer,4);
+		i+=6;
+		cout<<buffer<<endl;
+	}
+	free(buffer);*/
+	Controler* conTTServ= new Controler();
+	message msg;
+	int dato =1234556;
+	msg.MSG=(void*)&dato;
+	msg.sizeMSG= sizeof(int);
+	conTTServ->writeToServer(&msg);
     return 0;
 }
 

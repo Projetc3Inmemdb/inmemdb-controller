@@ -28,7 +28,7 @@ friend class Controler;
 public:
 	cliente();
 	virtual ~cliente();
-	void startThread(char* pIP, int Pport);
+	void startThread(server_data* datos);
 private:
 	int _Nserver;
 	int _cantHilos;

@@ -13,9 +13,12 @@
  */
 Controler::Controler() {
 	this->_conexiones= new cliente();
-	/*
-	 * falta hacer que el arranque la conexion con todos los server.
-	 */
+	serveDatasReader* getServerDatas= new serveDatasReader();
+	server_data* AllocServerDatas=(server_data*)getServerDatas->getDatas();
+	for(int i=0; i<MaxServers; i++){
+		_conexiones->startThread(&AllocServerDatas[i]);
+	}
+	_PIRaid=0;
 }
 
 /**
@@ -31,7 +34,7 @@ Controler::~Controler() {
  * le llegue el mensaje pedido.
  */
 void Controler::readFromServer(void* dato){
-
+	_conexiones->sendMSG(dato);
 }
 
 /**
@@ -40,5 +43,25 @@ void Controler::readFromServer(void* dato){
  * este mismo.
  */
 void Controler::writeToServer(void* dato){
-
+	if(raid==cero){
+		(*(message*)dato).operation=writeF;
+		(*(message*)dato).toServer=_PIRaid%MaxServers;
+		_conexiones->sendMSG(dato);
+		_PIRaid++;
+	}
+	else if(raid==uno){
+		(*(message*)dato).operation=writeF;
+		for(int i =0; i<MaxServers; i++){
+			(*(message*)dato).toServer=i;
+			_conexiones->sendMSG(dato);
+		}
+	}
+	else if(raid==cinco){
+		//no se que hacer
+	}
+	else{
+		(*(message*)dato).operation=writeF;
+		(*(message*)dato).toServer=cero;
+		_conexiones->sendMSG(dato);
+	}
 }

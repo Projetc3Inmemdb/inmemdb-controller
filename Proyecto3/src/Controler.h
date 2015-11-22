@@ -10,6 +10,7 @@
 #include "Constantes.h"
 #include "cliente.h"
 #include "structs.h"
+#include "serveDatasReader.h"
 
 /**
  * clase que va a funicionar como controlador de los
@@ -24,6 +25,7 @@ public:
 	void readFromServer(void* dato);
 private:
     cliente * _conexiones;
+    int _PIRaid;
 };
 
 #endif	/* CONTROLER_H */

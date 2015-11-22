@@ -36,6 +36,7 @@ struct server_data{
     char* pIP;
     int pPort;
     int spaceThread;
+    int raid;
 };
 extern server_data thrdDtt;
 

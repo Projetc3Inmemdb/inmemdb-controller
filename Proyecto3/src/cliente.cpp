@@ -27,17 +27,11 @@ cliente::~cliente() {
  * ip del server.
  * recibe un entero que es el puerto y un char* que es el ip.
  */
-void cliente::startThread(char* pIP, int Pport) {
+void cliente::startThread(server_data * datos) {
     if(_Nserver==MaxServers){
         std::cout<<"max servers reached"<<std::endl;
         return;
     }
-    //crear el struct que va a contener los datos de la conexion
-    server_data datos;
-    //establecer sus atributos.
-    datos.pIP=pIP;
-    datos.pPort=Pport;
-    datos.spaceThread=_Nserver;
     /*establecer el tamaño de mensaje que enviamos
     datos.size=sizeof(message);
     dato que vamos a enviar, en este caso un struct que gruarda un dato
@@ -56,7 +50,7 @@ void cliente::startThread(char* pIP, int Pport) {
     	 std::cout<<"Error:unable to create thread,"<<respond<< std::endl;
 		 exit(-uno);
     }*/
-    conncT((void*)&datos);
+    conncT(datos);
     _Nserver++;
 }
 
@@ -108,14 +102,18 @@ void * cliente::conncT(void* datas){
 void cliente::sendMSG(void* pMsg) {
     message mensaje= *((message*)pMsg);
     int _n;
-    _n = write(_pTcontn[mensaje.toServer]._sockfd, mensaje.MSG, sizeof(message));
+    _n = write(_pTcontn[mensaje.toServer]._sockfd, (void*)&mensaje, sizeof(message));
     if (_n < cero){
         if(_debug)
             std::cout<<"mensaje fallido"<<std::endl;
         error(error4);
     }
     if(_debug)
-        std::cout<<"mensaje enviado"<<std::endl;
+		std::cout<<"mensaje enviado"<<std::endl;
+    void* almacenador= malloc(sizeof(message));
+    _n=read(_pTcontn[mensaje.toServer]._sockfd, almacenador, sizeof(message));
+	if (_n < cero)
+		error(error5);
     bzero(mensaje.MSG, sizeof(message));
 }
 

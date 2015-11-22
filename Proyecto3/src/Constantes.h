@@ -17,7 +17,23 @@ public:
      * MaxServers=2;
      * es la cantidad de servidores a la que nos vamos a conectar.
      */
-    static const int MaxServers=2;
+    static const int MaxServers=1;
+    /**
+     * constante para controlar el raid con el cual le decimos al server que hacer.
+     * raid=0-->raid0
+     * raid=1-->raid1
+     * raid=5-->raid5
+     * else-->raidNULL
+     */
+    static const int raid=2;
+    /**
+     * hace una lectura en el server
+     */
+    static const int readF=0;
+    /**
+     * hace una estritura en el server
+     */
+    static const int writeF=1;
     /**
      * bandera de debug
      */
